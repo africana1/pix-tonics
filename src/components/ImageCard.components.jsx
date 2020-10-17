@@ -30,6 +30,8 @@ const ImageCard = ({image}) => {
       <div className='px-6 py-4'>
         <a
           href={largeImageURL}
+          download={largeImageURL}
+          title={user}
           className='bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded inline-flex items-center'
         >
           <svg className='fill-current w-4 h-4 mr-2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>

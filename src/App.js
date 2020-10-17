@@ -7,7 +7,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [term, setTerm] = useState('');
 
+  const [error, setError] = useState('');
+
   useEffect(() => {
+    setError('');
     fetch(
       `https://pixabay.com/api/?key=${process.env.REACT_APP_PIXABAY_API_KEY}&q=${term}&image_type=photo&per_page=10`
     )
@@ -16,12 +19,20 @@ const App = () => {
         setImages(data.hits);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setError(err.message);
+        console.log(err.message);
+      });
   }, [term]);
 
   return (
     <div className='container mx-auto'>
       <ImageSearch searchText={(text) => setTerm(text)} />
+      <p className='text-2xl text-red-500 text-center mx-auto mb-5'>{error}</p>
+      {!isLoading && images.length === 0 && (
+        <h1 className='text-5xl text-center mx-auto mt-32'>No images found...</h1>
+      )}
+
       {isLoading ? (
         <h1 className='text-6xl text-center mx-auto mt-32'>Loading...</h1>
       ) : (
